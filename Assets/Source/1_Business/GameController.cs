@@ -2,22 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Domain.Model.LevelGenerator;
+
+[DisallowMultipleComponent]
+[RequireComponent(typeof (LevelGenerator))]
 public class GameController : MonoBehaviour
 {
+    private ILevelGenerator levelGenerator;
+
     //player
     //player
-    //generator
     //path
 
     private void Awake()
     {
-        LevelGeneration();
-        PathGeneration();
+        levelGenerator = gameObject.GetComponent<LevelGenerator>();        
     }
 
     private void Start()
     {
-        
+        LevelGeneration();
+        PathGeneration();
     }
 
     private void LevelGeneration()
