@@ -9,24 +9,24 @@ namespace Domain.Model.PathFinding
     [DisallowMultipleComponent]
     public class PathFinder : MonoBehaviour, IPathFinder, IGenerator
     {
-        private void Start()
+        private IGenerator gridGenerator;
+
+        public void SetObstacles(List<GameObject> gameObjects)
         {
-
-        }
-
-        private void Update()
-        {
-
+            throw new System.NotImplementedException();
         }
 
         public void Generation()
         {
-            
+
+            DestroyGenerator();
         }
 
-        public void DestroyGenerator()
+        public void DestroyGenerator() => gridGenerator.DestroyGenerator();
+
+        public List<GameObject> GetCreatedObjects()
         {
-
-        }
+            throw new System.NotImplementedException();
+        }        
     }
 }

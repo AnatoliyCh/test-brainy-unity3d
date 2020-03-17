@@ -10,7 +10,7 @@ namespace Business.ServiceMethods
 {
     public static class ServiceMethods
     {
-        public static int PercentNumber(int percent, int number)
+        public static float PercentNumber(float percent, float number)
         {
             return percent * number / 100;
         }
