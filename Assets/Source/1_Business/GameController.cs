@@ -24,8 +24,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         levelGenerator?.Generation();
-        pathFinder?.SetObstacles(levelGenerator?.GetCreatedObjects());        
-        (pathFinder as IGenerator)?.Generation();
+        (pathFinder as IGenerator)?.Generation(levelGenerator?.GetCreatedObjects());
         levelGenerator?.DestroyGenerator();
         levelGenerator = null;
     }

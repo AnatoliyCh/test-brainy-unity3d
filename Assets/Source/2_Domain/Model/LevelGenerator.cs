@@ -1,9 +1,7 @@
-﻿using System.Collections;
+﻿using Business.ServiceMethods;
+using Domain.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
-
-using Domain.Interfaces;
-using Business.ServiceMethods;
 
 namespace Domain.Model.LevelGeneration
 {
@@ -71,6 +69,9 @@ namespace Domain.Model.LevelGeneration
 
             createdObjects.Add(zone);
         }
+
+        public void Generation(List<GameObject> gameObjects) => Generation();
+
         public void DestroyGenerator()
         {
             Destroy(this);
@@ -79,6 +80,6 @@ namespace Domain.Model.LevelGeneration
         public List<GameObject> GetCreatedObjects()
         {
             return createdObjects;
-        }
+        }        
     }
 }

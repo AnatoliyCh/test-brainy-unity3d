@@ -11,22 +11,21 @@ namespace Domain.Model.PathFinding
     {
         private IGenerator gridGenerator;
 
-        public void SetObstacles(List<GameObject> gameObjects)
-        {
-            throw new System.NotImplementedException();
-        }
+        public void Generation() => Generation(null);
 
-        public void Generation()
+        public void Generation(List<GameObject> gameObjects)
         {
-
+            gridGenerator = gameObject.GetComponent<GridGenerator>();
+            if (gridGenerator == null) gridGenerator = gameObject.AddComponent<GridGenerator>();
+            gridGenerator?.Generation(gameObjects);
             DestroyGenerator();
         }
 
-        public void DestroyGenerator() => gridGenerator.DestroyGenerator();
+        public void DestroyGenerator() => gridGenerator?.DestroyGenerator();
 
         public List<GameObject> GetCreatedObjects()
         {
             throw new System.NotImplementedException();
-        }        
+        }
     }
 }

@@ -10,7 +10,6 @@ namespace Domain.Interfaces
 {
     interface IPathFinder
     {
-        /// <summary> установка препятствий </summary> <param name="gameObjects"></param>
-        void SetObstacles(List<GameObject> gameObjects);
+
     }
 }
