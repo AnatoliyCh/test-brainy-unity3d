@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Model.LevelGenerator
+namespace Domain.Interfaces
 {
-    interface ILevelGenerator
+    public interface IGenerator
     {
-
+        void Generation();
+        void DestroyGenerator();
     }
 }

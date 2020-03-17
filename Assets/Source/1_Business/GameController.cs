@@ -2,40 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Domain.Model.LevelGenerator;
+using Domain.Interfaces;
 
 [DisallowMultipleComponent]
-[RequireComponent(typeof (LevelGenerator))]
 public class GameController : MonoBehaviour
 {
-    private ILevelGenerator levelGenerator;
+    private IGenerator levelGenerator;
+    private IPathFinder pathFinder;
 
     //player
     //player
-    //path
 
     private void Awake()
     {
-        levelGenerator = gameObject.GetComponent<LevelGenerator>();        
+        levelGenerator = gameObject.GetComponent<Domain.Model.LevelGeneration.LevelGenerator>();
+        pathFinder = gameObject.GetComponent<Domain.Model.PathFinding.PathFinder>();
+        if (levelGenerator == null) levelGenerator = gameObject.AddComponent<Domain.Model.LevelGeneration.LevelGenerator>();
+        if (pathFinder == null) pathFinder = gameObject.AddComponent<Domain.Model.PathFinding.PathFinder>();
     }
 
     private void Start()
     {
-        LevelGeneration();
-        PathGeneration();
-    }
-
-    private void LevelGeneration()
-    {
-
-    }
-    private void PathGeneration()
-    {
-
+        levelGenerator?.Generation();
+        levelGenerator?.DestroyGenerator();
+        levelGenerator = null;
+        (pathFinder as IGenerator)?.Generation();        
+        (pathFinder as IGenerator)?.DestroyGenerator();        
     }
 
     public void GameReset()
     {
-        
+
     }
 }
