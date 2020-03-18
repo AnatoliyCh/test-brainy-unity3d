@@ -18,7 +18,17 @@ namespace Business.ServiceMethods
         /// <summary> Возвращает радиус объекта по самой большой стороне </summary>
         public static float GetObjectRadius(Vector2 scaleObject)
         {
-            return scaleObject.x > scaleObject.y ? scaleObject.x : scaleObject.y;
+            return scaleObject.x / 2 > scaleObject.y / 2 ? scaleObject.x / 2 : scaleObject.y / 2;
+        }
+
+        public static bool IsСollision2D(Transform objectA, Transform objectB)
+        {
+            return Vector2.Distance(objectA.position, objectB.position) < GetObjectRadius(objectA.lossyScale) + GetObjectRadius(objectB.lossyScale) ? true : false;
+        }
+
+        public static bool IsСollision2D(GameObject objectA, GameObject objectB)
+        {
+            return IsСollision2D(objectA.transform, objectB.transform);
         }
     }
 }

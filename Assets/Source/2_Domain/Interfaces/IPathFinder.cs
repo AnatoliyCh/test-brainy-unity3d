@@ -10,6 +10,6 @@ namespace Domain.Interfaces
 {
     interface IPathFinder
     {
-
+        void DebugGrid();
     }
 }

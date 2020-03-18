@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Domain.Interfaces;
 using UnityEngine;
-
-using Domain.Interfaces;
 
 [DisallowMultipleComponent]
 public class GameController : MonoBehaviour

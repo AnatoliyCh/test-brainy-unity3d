@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 940e78de53ce9ad47a768b586ebd1514
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - squarePrefab: {fileID: 4873319156578602017, guid: ce109bd7e9d01284087408b761cd76a2,
+      type: 3}
+  - triggerPrefab: {fileID: 8134038931461708706, guid: 67f3d3bb8e0471740bd6f18c63d92109,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

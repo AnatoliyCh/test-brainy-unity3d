@@ -132,7 +132,9 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420034}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -231,10 +233,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   squarePrefab: {fileID: 4873319156578602017, guid: ce109bd7e9d01284087408b761cd76a2,
     type: 3}
-  sizeZone: {x: 20, y: 20}
-  colorZone: {r: 0.16153437, g: 0.6226415, b: 0.16153437, a: 1}
   triggerPrefab: {fileID: 8134038931461708706, guid: 67f3d3bb8e0471740bd6f18c63d92109,
     type: 3}
+  sizeZone: {x: 20, y: 20}
+  colorZone: {r: 0.16153437, g: 0.6226415, b: 0.16153437, a: 1}
   maxNumberObstacles: 20
   colorsObstacles:
   - {r: 0.7830189, g: 0.18098079, b: 0.20407964, a: 1}
@@ -242,3 +244,31 @@ MonoBehaviour:
   - {r: 0.13725491, g: 0.78431374, b: 0.7604459, a: 1}
   - {r: 0.13725491, g: 0.18060102, b: 0.78431374, a: 1}
   - {r: 0.78431374, g: 0.13725491, b: 0.6487893, a: 1}
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db5b80879463bc54e825c7849a96cbfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &519420035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 940e78de53ce9ad47a768b586ebd1514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squarePrefab: {fileID: 4873319156578602017, guid: ce109bd7e9d01284087408b761cd76a2,
+    type: 3}
+  triggerPrefab: {fileID: 8134038931461708706, guid: 67f3d3bb8e0471740bd6f18c63d92109,
+    type: 3}
