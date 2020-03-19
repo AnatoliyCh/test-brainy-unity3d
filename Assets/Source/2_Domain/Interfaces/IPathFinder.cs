@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Model.PathFinding;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,9 @@ using UnityEngine;
 
 namespace Domain.Interfaces
 {
-    interface IPathFinder
+    public interface IPathFinder
     {
-        void DebugGrid();
+        void DebugGrid(bool debug);
+        List<PathCell> FindPath(Vector2 start, Vector2 end);
     }
 }

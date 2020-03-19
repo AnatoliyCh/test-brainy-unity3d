@@ -1,7 +1,5 @@
-﻿using Business.ServiceMethods;
-using Domain.Interfaces;
+﻿using Domain.Interfaces;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +11,7 @@ namespace Domain.Model.PathFinding
         [SerializeField] private GameObject triggerPrefab; // триггер для определения препятствий        
         private Color cellNotBlocked = new Color(Color.white.r, Color.white.g, Color.white.b, 0f);
         private Color cellBlocked = new Color(Color.black.r, Color.black.g, Color.black.b, 0f);
-        public PathCell[,] Grid { get; protected set; }       
+        public PathCell[,] Grid { get; protected set; }
 
         public void Generation() => Generation(null);
 
@@ -33,14 +31,15 @@ namespace Domain.Model.PathFinding
                 for (int i = 0; i < Grid.GetLength(0); i++)
                 {
                     for (int j = 0; j < Grid.GetLength(1); j++)
-                    {                        
+                    {
                         trigger.localPosition = new Vector3(-zone.localScale.x + trigger.localScale.x + j, -zone.localScale.y + trigger.localScale.y + i, -4) / 2;
                         Grid[j, i] = Instantiate(squarePrefab, trigger.localPosition, trigger.rotation, parentGrid.transform).AddComponent<PathCell>();
                         Grid[j, i].transform.localScale = trigger.localScale;
                         Grid[j, i].Position = trigger.localPosition;
+                        Grid[j, i].PositionGrid = new Vector2Int(j, i);
                         Grid[j, i].gameObject.name = i + "_" + j;
                         var spriteRenderer = Grid[j, i].gameObject.GetComponent<SpriteRenderer>();
-                        spriteRenderer.color = cellNotBlocked;                       
+                        spriteRenderer.color = cellNotBlocked;
                     }
                 }
                 // проверка на столкновение
@@ -61,6 +60,7 @@ namespace Domain.Model.PathFinding
                 // удаляем коллайдеры
                 foreach (var item in Grid)
                     Destroy(item.GetComponent<Collider2D>());
+                Destroy(trigger.gameObject); // удаляем лишний триггер
             }
         }
 
@@ -69,6 +69,6 @@ namespace Domain.Model.PathFinding
         public List<GameObject> GetCreatedObjects()
         {
             return null;
-        }       
+        }
     }
 }

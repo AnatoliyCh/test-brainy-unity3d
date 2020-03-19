@@ -40,7 +40,8 @@ namespace Domain.Model.LevelGeneration
                         collision = true;
                         break;
                     }
-                if (!collision) // создание объекта
+                // создание объекта
+                if (!collision) 
                 {
                     var newObstacles = Instantiate(squarePrefab, trigger.transform.position, trigger.transform.rotation);
                     newObstacles.transform.localScale = new Vector2(trigger.transform.localScale.x - 1, trigger.transform.localScale.y - 1);
