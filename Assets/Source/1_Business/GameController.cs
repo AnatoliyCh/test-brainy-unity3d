@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour
         levelGenerator?.DestroyGenerator();
         levelGenerator = null;
 
-        var test = pathFinder.FindPath(new Vector2(-5, -5), new Vector2(5, 5));
+        var test = pathFinder.FindPath(new Vector2(-20, -20), new Vector2(10, 10));
         if (test != null)
             for (int i = 0; i < test.Count - 1; i++)
                 Debug.DrawLine(new Vector3(test[i].Position.x, test[i].Position.y), new Vector3(test[i + 1].Position.x, test[i + 1].Position.y), Color.red, 2.5f);

@@ -1,7 +1,6 @@
-﻿using System.Collections;
+﻿using Domain.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
-using Domain.Interfaces;
 
 namespace Domain.Model.PathFinding
 {
