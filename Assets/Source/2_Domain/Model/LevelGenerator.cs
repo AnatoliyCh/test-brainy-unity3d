@@ -10,10 +10,10 @@ namespace Domain.Model.LevelGeneration
     {
         [SerializeField] private GameObject squarePrefab; // базовый блок для генерации
         [SerializeField] private GameObject triggerPrefab; // триггер для генерации препятствий
-        
+
         [SerializeField] private Vector2Int sizeZone; // размер игрового поля
         [SerializeField] private Color colorZone;
-        
+
         [SerializeField] private int maxNumberObstacles; // макс. кол-во препятствий
         [SerializeField] private Color[] colorsObstacles; // цвета препятствий
 
@@ -41,7 +41,7 @@ namespace Domain.Model.LevelGeneration
                         break;
                     }
                 // создание объекта
-                if (!collision) 
+                if (!collision)
                 {
                     var newObstacles = Instantiate(squarePrefab, trigger.transform.position, trigger.transform.rotation);
                     newObstacles.transform.localScale = new Vector2(trigger.transform.localScale.x - 1, trigger.transform.localScale.y - 1);
@@ -66,6 +66,7 @@ namespace Domain.Model.LevelGeneration
                 zone.transform.position = Vector2.zero;
                 zone.transform.localScale = new Vector3(sizeZone.x, sizeZone.y);
                 zone.name = "Zone";
+                zone.transform.tag = "GameZone";
                 var spriteRenderer = zone.GetComponent<SpriteRenderer>();
                 if (spriteRenderer != null) spriteRenderer.color = colorZone;
                 Destroy(zone.GetComponent<Collider2D>());
@@ -86,6 +87,6 @@ namespace Domain.Model.LevelGeneration
         public List<GameObject> GetCreatedObjects()
         {
             return createdObjects;
-        }
+        }        
     }
 }

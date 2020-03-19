@@ -30,5 +30,12 @@ namespace Business.ServiceMethods
         {
             return IsСollision2D(objectA.transform, objectB.transform);
         }
+
+        public static Vector3 GetMouseWorldPosition()
+        {
+            var pozition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            pozition.z = 0;
+            return pozition;
+        }
     }
 }
