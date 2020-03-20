@@ -31,6 +31,7 @@ namespace Domain.Model.LevelGeneration
                 trigger.transform.localScale = zone.lossyScale;
                 trigger.name = "Trigger";
                 trigger.transform.tag = "EndZone";
+                trigger.layer = 2; // ignoreRay
                 trigger.transform.SetParent(zone);
             }
             else Destroy(trigger);
@@ -62,9 +63,11 @@ namespace Domain.Model.LevelGeneration
                 {
                     var newObstacle = Instantiate(squarePrefab, trigger.transform.position, trigger.transform.rotation);
                     newObstacle.transform.localScale = new Vector2(trigger.transform.localScale.x - 1, trigger.transform.localScale.y - 1);
-                    if (colorsObstacles.Length > 0) newObstacle.GetComponent<SpriteRenderer>().color = colorsObstacles[Random.Range(0, colorsObstacles.Length)];
-                    newObstacle.gameObject.tag = "Obstacle";
+                    if (colorsObstacles.Length > 0) newObstacle.GetComponent<SpriteRenderer>().color = colorsObstacles[Random.Range(0, colorsObstacles.Length)];                    
                     createdObjects.Add(newObstacle);
+                    newObstacle.tag = "Obstacle";
+                    newObstacle.name = "Obstacle_" + createdObjects.Count;
+                    newObstacle.layer = 8; // FireDirection
                 }
                 collision = false;
             }

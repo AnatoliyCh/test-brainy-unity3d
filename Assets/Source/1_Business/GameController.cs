@@ -10,15 +10,19 @@ public class GameController : MonoBehaviour
     [SerializeField] private bool debug = false;
 
     private IGenerator levelGenerator;
-    private IGenerator creatureGenerator;
-    private IPathFinder pathFinder;
+    private IGenerator creatureGenerator;    
     private List<ICreatureController> creatures;
+
+    public IPathFinder pathFinder;
 
     // отрисовка сетки и путей ботов
     private void DebugDraw()
     {
         pathFinder.DebugPath(true);
-        var test = pathFinder.FindPath(new Vector2(-20, -20), new Vector2(10, 10));
+        foreach (var item in creatures)
+            item.Debug = true;
+
+        //pathFinder.FindPath(new Vector2(-20, -20), new Vector2(10, 10));
     }
     // получение всех существ (боты и игроки)
     private void SetCreatures(List<GameObject> gameObjects)
@@ -62,6 +66,9 @@ public class GameController : MonoBehaviour
     public void GameReset(string winnerTag)
     {
         foreach (var item in creatures)
+        {
             item.ResetPosition();
+        }
+
     }
 }

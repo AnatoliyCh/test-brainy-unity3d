@@ -8,6 +8,7 @@ TagManager:
   - GameZone
   - Bullet
   - EndZone
+  - Bot
   layers:
   - Default
   - TransparentFX

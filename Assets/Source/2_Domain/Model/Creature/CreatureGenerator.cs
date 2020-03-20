@@ -22,12 +22,23 @@ namespace Domain.Model.Creature
             return null;
         }
 
-        private void SetUser()
+        // иниц. существ (распределение ролей)
+        private void InitCreatures()
         {
             creatures[0].tag = "Player";
             creatures[0].name = "Player";
+            creatures[0].layer = 8; // FireDirection
             var playerBehavior = creatures[0].AddComponent<PlayerBehavior>();
             playerBehavior.mainCamera = Camera.main;
+
+            for (int i = 1; i < creatures.Count; i++)
+            {                
+                creatures[i].name = "Creature_" + i;
+                creatures[i].tag = "Bot";
+                creatures[i].layer = 2; // ignoreRay
+                var botBehavior = creatures[i].AddComponent<BotBehavior>();
+                if (botBehavior != null) BotBehavior.player = creatures[0].transform;
+            }
         }
 
         public void Generation() => Generation(null);
@@ -48,12 +59,11 @@ namespace Domain.Model.Creature
                     for (int i = 0; i < MAX_CREATURE; i++)
                     {
                         creatures.Add(Instantiate(creaturePrefab, new Vector3(Random.Range(xMin.x, xMax.x), Random.Range(yMin.y, yMax.y), -1), creaturePrefab.transform.rotation));
-                        var creatureController = creatures[creatures.Count - 1].AddComponent<CreatureController>();
-                        creatures[creatures.Count - 1].name = "Creature_" + i;
+                        var creatureController = creatures[creatures.Count - 1].AddComponent<CreatureController>();                        
                         creatureController.StartPosition = creatures[creatures.Count - 1].transform.position;
                         creatureController.SetBullet(bulletPrefab);
                     }
-                    SetUser(); // установка пользователя
+                    InitCreatures();
                 }
             }
         }

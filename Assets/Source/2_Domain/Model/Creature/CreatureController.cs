@@ -9,12 +9,14 @@ namespace Domain.Model.Creature
     {
         private const int SPEED = 2;
 
-        public static GameController gameController;
-
         private GameObject bullet;
         private Transform spawnBullet;
+        public static GameController gameController;                       
 
         public Vector3 StartPosition { get; set; }
+        public bool Debug { get; set; } = false;
+
+        public GameController GetGameController => gameController;        
 
         private void Awake() => spawnBullet = transform.Find("SpawnBullet");
 
@@ -27,7 +29,12 @@ namespace Domain.Model.Creature
             }
         }
 
-        public void ResetPosition() => transform.position = StartPosition;
+        public void ResetPosition()
+        {
+            transform.position = StartPosition;
+            var botBehavior = gameObject.GetComponent<BotBehavior>();
+            if (botBehavior != null) botBehavior.GetPath();
+        }
 
         public void Movement(Vector3 moveDirection) => transform.position += moveDirection * SPEED * Time.deltaTime;
 
