@@ -7,7 +7,7 @@ namespace Domain.Interfaces
 {
     public interface IPathFinder
     {
-        void DebugGrid(bool debug);
+        void DebugPath(bool debug);
         List<PathCell> FindPath(Vector2 start, Vector2 end);
     }
 }

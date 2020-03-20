@@ -59,7 +59,7 @@ namespace Domain.Model.PathFinding
                 // проверка на столкновение
                 foreach (var item in gameObjects)
                 {
-                    if (item.transform.tag != "GameZone")
+                    if (item.transform.tag != "GameZone" && item.transform.tag != "EndZone")
                     {
                         var blockedCells = Physics2D.OverlapBoxAll(item.transform.position, item.transform.lossyScale - new Vector3(.5f, .5f, 0), item.transform.eulerAngles.z);
                         foreach (var cell in blockedCells)

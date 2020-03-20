@@ -9,8 +9,12 @@ namespace Domain.Model.Creature
     {
         private const int SPEED = 2;
 
+        public static GameController gameController;
+
         private GameObject bullet;
         private Transform spawnBullet;
+
+        public Vector3 StartPosition { get; set; }
 
         private void Awake() => spawnBullet = transform.Find("SpawnBullet");
 
@@ -19,8 +23,11 @@ namespace Domain.Model.Creature
             if (collision.transform.tag == "Bullet")
             {
                 Destroy(collision.gameObject);
+                gameController?.GameReset(transform.tag);
             }
         }
+
+        public void ResetPosition() => transform.position = StartPosition;
 
         public void Movement(Vector3 moveDirection) => transform.position += moveDirection * SPEED * Time.deltaTime;
 
@@ -29,5 +36,6 @@ namespace Domain.Model.Creature
         public void Shot() => Instantiate(bullet, spawnBullet.position, transform.rotation).GetComponent<Rigidbody2D>().velocity += (Vector2)(transform.right * 30f);
 
         public void SetBullet(GameObject bullet) => this.bullet = bullet;
+       
     }
 }

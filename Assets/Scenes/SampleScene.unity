@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 519420034}
   - component: {fileID: 519420033}
   - component: {fileID: 519420035}
+  - component: {fileID: 519420036}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -213,7 +214,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -271,4 +272,20 @@ MonoBehaviour:
   squarePrefab: {fileID: 4873319156578602017, guid: ce109bd7e9d01284087408b761cd76a2,
     type: 3}
   triggerPrefab: {fileID: 8134038931461708706, guid: 67f3d3bb8e0471740bd6f18c63d92109,
+    type: 3}
+--- !u!114 &519420036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21c3eddb3023b2d47a715da34165100e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 7364983380909802569, guid: 2e200ce2caa93184385650b3de8cb29a,
+    type: 3}
+  creaturePrefab: {fileID: 3371470324962449451, guid: 789295cf096b6b1498a82e9175b289dd,
     type: 3}

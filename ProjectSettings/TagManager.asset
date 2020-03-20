@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Obstacle
   - GameZone
+  - Bullet
+  - EndZone
   layers:
   - Default
   - TransparentFX

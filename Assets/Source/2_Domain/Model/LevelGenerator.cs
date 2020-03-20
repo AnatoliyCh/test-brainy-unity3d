@@ -19,6 +19,23 @@ namespace Domain.Model.LevelGeneration
 
         private List<GameObject> createdObjects = new List<GameObject>();
 
+        // триггер для ограничения зоны
+        private void TriggerZone(Transform zone)
+        {
+            var trigger = Instantiate(triggerPrefab, squarePrefab.transform.position, squarePrefab.transform.rotation);            
+            var collider2D = trigger.GetComponent<Collider2D>();
+            if (collider2D != null)
+            {
+                collider2D.isTrigger = true;
+                createdObjects.Add(trigger);
+                trigger.transform.localScale = zone.lossyScale;
+                trigger.name = "Trigger";
+                trigger.transform.tag = "EndZone";
+                trigger.transform.SetParent(zone);
+            }
+            else Destroy(trigger);
+        }
+        
         // генерация препятствий
         private void GenerationObstacles(Transform parent)
         {
@@ -43,11 +60,11 @@ namespace Domain.Model.LevelGeneration
                 // создание объекта
                 if (!collision)
                 {
-                    var newObstacles = Instantiate(squarePrefab, trigger.transform.position, trigger.transform.rotation);
-                    newObstacles.transform.localScale = new Vector2(trigger.transform.localScale.x - 1, trigger.transform.localScale.y - 1);
-                    if (colorsObstacles.Length > 0) newObstacles.GetComponent<SpriteRenderer>().color = colorsObstacles[Random.Range(0, colorsObstacles.Length)];
-                    newObstacles.gameObject.tag = "Obstacle";
-                    createdObjects.Add(newObstacles);
+                    var newObstacle = Instantiate(squarePrefab, trigger.transform.position, trigger.transform.rotation);
+                    newObstacle.transform.localScale = new Vector2(trigger.transform.localScale.x - 1, trigger.transform.localScale.y - 1);
+                    if (colorsObstacles.Length > 0) newObstacle.GetComponent<SpriteRenderer>().color = colorsObstacles[Random.Range(0, colorsObstacles.Length)];
+                    newObstacle.gameObject.tag = "Obstacle";
+                    createdObjects.Add(newObstacle);
                 }
                 collision = false;
             }
@@ -71,7 +88,11 @@ namespace Domain.Model.LevelGeneration
                 if (spriteRenderer != null) spriteRenderer.color = colorZone;
                 Destroy(zone.GetComponent<Collider2D>());
 
-                if (sizeZone.x > 0 && sizeZone.y > 0) GenerationObstacles(zone.transform);
+                if (sizeZone.x > 0 && sizeZone.y > 0)
+                {
+                    GenerationObstacles(zone.transform);
+                    TriggerZone(zone.transform);
+                }
 
                 createdObjects.Add(zone);
             }

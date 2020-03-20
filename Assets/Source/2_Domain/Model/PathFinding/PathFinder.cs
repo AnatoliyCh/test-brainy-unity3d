@@ -10,6 +10,7 @@ namespace Domain.Model.PathFinding
         private const int COST_MOVE_STRAIGHT = 10;
         private const int COST_MOVE_DIAGONAL = 14;
 
+        private bool debug = false;
         private IGenerator gridGenerator;
         private PathCell[,] grid;
 
@@ -60,6 +61,7 @@ namespace Domain.Model.PathFinding
                 currentCell = currentCell.CameFromCell;
             }
             path.Reverse();
+            if (debug) DebugDrawingPath(path);
             return path;
         }
 
@@ -84,10 +86,18 @@ namespace Domain.Model.PathFinding
             return neighborList;
         }
 
-        public void DebugGrid(bool debug)
+        private void DebugDrawingPath(List<PathCell> pathCells)
+        {
+            if (pathCells != null)
+                for (int i = 0; i < pathCells.Count - 1; i++)
+                    Debug.DrawLine(new Vector3(pathCells[i].Position.x, pathCells[i].Position.y), new Vector3(pathCells[i + 1].Position.x, pathCells[i + 1].Position.y), Color.red, 5f);
+        }
+
+        public void DebugPath(bool debug)
         {
             if (grid != null)
             {
+                this.debug = debug;
                 if (debug)
                 {
                     var rows = new List<string>();
@@ -103,11 +113,6 @@ namespace Domain.Model.PathFinding
                         summStr += str + "\n";
                     Debug.Log(summStr);
                     DrawingGrid(.6f);
-                }
-                else
-                {
-                    Debug.ClearDeveloperConsole();
-                    DrawingGrid(.0f);
                 }
             }
         }
