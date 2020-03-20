@@ -52,6 +52,7 @@ namespace Domain.Model.PathFinding
                         grid[j, i].Position = trigger.localPosition;
                         grid[j, i].PositionGrid = new Vector2Int(j, i);
                         grid[j, i].gameObject.name = i + "_" + j;
+                        grid[j, i].gameObject.tag = "PathCell";
                         var spriteRenderer = grid[j, i].gameObject.GetComponent<SpriteRenderer>();
                         spriteRenderer.color = cellNotBlocked;
                     }
@@ -74,9 +75,17 @@ namespace Domain.Model.PathFinding
                         }
                     }
                 }
-                // удаляем коллайдеры
+                // коллайдеры
                 foreach (var item in grid)
-                    Destroy(item.GetComponent<Collider2D>());
+                {
+                    var collider2D = item.GetComponent<Collider2D>();
+                    if (collider2D != null)
+                    {
+                        collider2D.isTrigger = true;
+                        collider2D.gameObject.layer = 9; //PathCell
+                    }
+
+                }
                 Destroy(trigger.gameObject); // удаляем лишний триггер
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Domain.Interfaces;
 using Domain.Model.Creature;
@@ -7,10 +8,15 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class GameController : MonoBehaviour
 {
+    public static GameController Instance { get; protected set; } = null; // Экземпляр объекта (маленький Singletone)
+
     [SerializeField] private bool debug = false;
 
+    public delegate void ScoreChangeEventHandler(string winnerTag); //delegate реагирования на изменение очков
+    public event ScoreChangeEventHandler EventScoreChange; //изменение позиции
+
     private IGenerator levelGenerator;
-    private IGenerator creatureGenerator;    
+    private IGenerator creatureGenerator;
     private List<ICreatureController> creatures;
 
     public IPathFinder pathFinder;
@@ -21,8 +27,6 @@ public class GameController : MonoBehaviour
         pathFinder.DebugPath(true);
         foreach (var item in creatures)
             item.Debug = true;
-
-        //pathFinder.FindPath(new Vector2(-20, -20), new Vector2(10, 10));
     }
     // получение всех существ (боты и игроки)
     private void SetCreatures(List<GameObject> gameObjects)
@@ -35,7 +39,6 @@ public class GameController : MonoBehaviour
                 var creatureController = item.GetComponent<ICreatureController>();
                 if (creatureController != null) creatures.Add(creatureController);
             }
-            if (creatures.Count > 0) CreatureController.gameController = this;
         }
     }
 
@@ -47,6 +50,9 @@ public class GameController : MonoBehaviour
         if (levelGenerator == null) levelGenerator = gameObject.AddComponent<Domain.Model.LevelGeneration.LevelGenerator>();
         if (creatureGenerator == null) creatureGenerator = gameObject.AddComponent<CreatureGenerator>();
         if (pathFinder == null) pathFinder = gameObject.AddComponent<Domain.Model.PathFinding.PathFinder>();
+
+        if (Instance != null) Destroy(gameObject);
+        Instance = this;
     }
 
     private void Start()
@@ -63,12 +69,9 @@ public class GameController : MonoBehaviour
     }
 
     // рестарт раунда с тегом победителя для таблицы очков
-    public void GameReset(string winnerTag)
+    public void GameReset(string loserTag)
     {
-        foreach (var item in creatures)
-        {
-            item.ResetPosition();
-        }
-
+        foreach (var item in creatures) item.ResetPosition();
+        EventScoreChange?.Invoke(loserTag);
     }
 }

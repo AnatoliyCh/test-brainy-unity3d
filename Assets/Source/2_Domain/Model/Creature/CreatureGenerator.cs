@@ -1,6 +1,4 @@
 ﻿using Domain.Interfaces;
-using Domain.Model.Creature;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,10 +30,9 @@ namespace Domain.Model.Creature
             playerBehavior.mainCamera = Camera.main;
 
             for (int i = 1; i < creatures.Count; i++)
-            {                
+            {
                 creatures[i].name = "Creature_" + i;
                 creatures[i].tag = "Bot";
-                creatures[i].layer = 2; // ignoreRay
                 var botBehavior = creatures[i].AddComponent<BotBehavior>();
                 if (botBehavior != null) BotBehavior.player = creatures[0].transform;
             }
@@ -59,7 +56,7 @@ namespace Domain.Model.Creature
                     for (int i = 0; i < MAX_CREATURE; i++)
                     {
                         creatures.Add(Instantiate(creaturePrefab, new Vector3(Random.Range(xMin.x, xMax.x), Random.Range(yMin.y, yMax.y), -1), creaturePrefab.transform.rotation));
-                        var creatureController = creatures[creatures.Count - 1].AddComponent<CreatureController>();                        
+                        var creatureController = creatures[creatures.Count - 1].AddComponent<CreatureController>();
                         creatureController.StartPosition = creatures[creatures.Count - 1].transform.position;
                         creatureController.SetBullet(bulletPrefab);
                     }

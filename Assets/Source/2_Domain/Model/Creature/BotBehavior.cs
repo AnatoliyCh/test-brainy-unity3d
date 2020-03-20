@@ -1,5 +1,4 @@
-﻿using Domain.Interfaces;
-using Domain.Model.PathFinding;
+﻿using Domain.Model.PathFinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,9 +16,8 @@ namespace Domain.Model.Creature
         private int pathIndex = -1; // ругулятор поиска пути
         // видимость игрока
         private bool isPlayerInRange = false; // игрок в радиусе обзора
-        private bool isVisiblePlayer = false; // прямая видимость        
+        private bool isVisiblePlayer = false; // прямая видимость
         private RaycastHit2D raycastHit;
-
 
         private void Start() => GetPath();
 
@@ -34,13 +32,13 @@ namespace Domain.Model.Creature
         {
             if (creatureController.Debug) Debug.DrawRay(transform.position, transform.right * VIEWING_RADIUS);
             if (isPlayerInRange)
-            {                
-                raycastHit = Physics2D.Raycast(transform.position, transform.right, VIEWING_RADIUS);
+            {
+                raycastHit = Physics2D.Raycast(transform.position, transform.right, VIEWING_RADIUS, (1 << 8)); // 1 << 8 лучи только на коллайдеры в слое 8
                 if (raycastHit.collider != null)
                 {
                     if (raycastHit.collider.gameObject.GetComponent<PlayerBehavior>() != null) isVisiblePlayer = true;
                     else isVisiblePlayer = false;
-                }                
+                }
             }
         }
 
@@ -56,6 +54,7 @@ namespace Domain.Model.Creature
                     if (pathIndex >= path.Count) pathIndex = -1; // достиг цели
                 }
             }
+            else GetPath();
         }
 
         protected override void HandleRotation()
@@ -81,11 +80,20 @@ namespace Domain.Model.Creature
 
         protected override void HandleShot()
         {
-            if (rollbackShot > 0) rollbackShot -= Time.deltaTime;
             if (rollbackShot <= 0 && isVisiblePlayer)
             {
                 creatureController.Shot();
                 rollbackShot = 2f;
+                StartCoroutine(Timer());
+            }
+        }
+
+        private IEnumerator Timer()
+        {
+            while (rollbackShot > 0)
+            {
+                yield return null;
+                rollbackShot -= Time.deltaTime;
             }
         }
 
@@ -93,7 +101,7 @@ namespace Domain.Model.Creature
         public void GetPath()
         {
             var unitCircle = Random.insideUnitCircle * 2;
-            path = creatureController?.GetGameController.pathFinder.FindPath(transform.position, new Vector2(unitCircle.x + player.position.x, unitCircle.y + player.position.y));
+            path = GameController.Instance?.pathFinder.FindPath(transform.position, new Vector2(unitCircle.x + player.position.x, unitCircle.y + player.position.y));
             pathIndex = path != null && path.Count > 0 ? 0 : -1;
         }
     }

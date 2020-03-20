@@ -26,12 +26,15 @@ namespace Domain.Model.PathFinding
         // ближайшая точка
         private PathCell GetGridCell(Vector2 target)
         {
-            var pathCell = grid[0, 0];
-            for (int y = 0; y < grid.GetLength(0); y++)
-                for (int x = 0; x < grid.GetLength(1); x++)
-                    if (!grid[x, y].IsBlocked && Vector2.Distance(grid[x, y].Position, target) <= Vector2.Distance(pathCell.Position, target))
-                        pathCell = grid[x, y];
-            return pathCell;
+            var endPathCell = grid[0, 0];
+            var cells = Physics2D.OverlapCircleAll(target, 1f, 1 << 9);// 1 << 8 лучи только на коллайдеры в слое 8
+            foreach (var item in cells)
+            {
+                var newPathCell = item.GetComponent<PathCell>();
+                if (!newPathCell.IsBlocked && Vector2.Distance(newPathCell.Position, target) <= Vector2.Distance(endPathCell.Position, target))
+                    endPathCell = newPathCell;
+            }
+            return endPathCell;
         }
         // стоимость расстояния
         private float CalculateDistanceCost(Vector2 a, Vector2 b)
@@ -90,7 +93,7 @@ namespace Domain.Model.PathFinding
         {
             if (pathCells != null)
                 for (int i = 0; i < pathCells.Count - 1; i++)
-                    Debug.DrawLine(new Vector3(pathCells[i].Position.x, pathCells[i].Position.y), new Vector3(pathCells[i + 1].Position.x, pathCells[i + 1].Position.y), Color.red, 5f);
+                    Debug.DrawLine(new Vector3(pathCells[i].Position.x, pathCells[i].Position.y), new Vector3(pathCells[i + 1].Position.x, pathCells[i + 1].Position.y), Color.red, 10f);
         }
 
         public void DebugPath(bool debug)
@@ -129,7 +132,8 @@ namespace Domain.Model.PathFinding
                 for (int y = 0; y < grid.GetLength(0); y++)
                     for (int x = 0; x < grid.GetLength(1); x++)
                     {
-                        var pathCell = GetGridCell(grid[x, y].Position);
+                        if (grid[x, y].IsBlocked) continue;
+                        var pathCell = grid[x, y];
                         pathCell.GCost = int.MaxValue;
                         pathCell.CalculateFCost();
                         pathCell.CameFromCell = null;
@@ -176,7 +180,7 @@ namespace Domain.Model.PathFinding
             if (gridGenerator == null) gridGenerator = gameObject.AddComponent<GridGenerator>();
             gridGenerator?.Generation(gameObjects);
             grid = (gridGenerator as GridGenerator)?.Grid;
-            DestroyGenerator();            
+            DestroyGenerator();
         }
 
         public void DestroyGenerator()

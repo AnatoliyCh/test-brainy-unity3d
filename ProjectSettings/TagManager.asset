@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - EndZone
   - Bot
+  - PathCell
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - UI
   - 
   - 
+  - FireDirection
   - PathCell
-  - 
   - 
   - 
   - 

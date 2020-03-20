@@ -22,7 +22,7 @@ namespace Domain.Model.LevelGeneration
         // триггер для ограничения зоны
         private void TriggerZone(Transform zone)
         {
-            var trigger = Instantiate(triggerPrefab, squarePrefab.transform.position, squarePrefab.transform.rotation);            
+            var trigger = Instantiate(triggerPrefab, squarePrefab.transform.position, squarePrefab.transform.rotation);
             var collider2D = trigger.GetComponent<Collider2D>();
             if (collider2D != null)
             {
@@ -36,7 +36,7 @@ namespace Domain.Model.LevelGeneration
             }
             else Destroy(trigger);
         }
-        
+
         // генерация препятствий
         private void GenerationObstacles(Transform parent)
         {
@@ -63,7 +63,7 @@ namespace Domain.Model.LevelGeneration
                 {
                     var newObstacle = Instantiate(squarePrefab, trigger.transform.position, trigger.transform.rotation);
                     newObstacle.transform.localScale = new Vector2(trigger.transform.localScale.x - 1, trigger.transform.localScale.y - 1);
-                    if (colorsObstacles.Length > 0) newObstacle.GetComponent<SpriteRenderer>().color = colorsObstacles[Random.Range(0, colorsObstacles.Length)];                    
+                    if (colorsObstacles.Length > 0) newObstacle.GetComponent<SpriteRenderer>().color = colorsObstacles[Random.Range(0, colorsObstacles.Length)];
                     createdObjects.Add(newObstacle);
                     newObstacle.tag = "Obstacle";
                     newObstacle.name = "Obstacle_" + createdObjects.Count;
@@ -103,14 +103,11 @@ namespace Domain.Model.LevelGeneration
 
         public void Generation(List<GameObject> gameObjects) => Generation();
 
-        public void DestroyGenerator()
-        {
-            Destroy(this);
-        }
+        public void DestroyGenerator() => Destroy(this);
 
         public List<GameObject> GetCreatedObjects()
         {
             return createdObjects;
-        }        
+        }
     }
 }

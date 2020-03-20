@@ -1,6 +1,4 @@
 ﻿using Domain.Interfaces;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Domain.Model.Creature
@@ -11,12 +9,9 @@ namespace Domain.Model.Creature
 
         private GameObject bullet;
         private Transform spawnBullet;
-        public static GameController gameController;                       
 
         public Vector3 StartPosition { get; set; }
         public bool Debug { get; set; } = false;
-
-        public GameController GetGameController => gameController;        
 
         private void Awake() => spawnBullet = transform.Find("SpawnBullet");
 
@@ -25,7 +20,7 @@ namespace Domain.Model.Creature
             if (collision.transform.tag == "Bullet")
             {
                 Destroy(collision.gameObject);
-                gameController?.GameReset(transform.tag);
+                GameController.Instance?.GameReset(transform.tag);
             }
         }
 
@@ -43,6 +38,5 @@ namespace Domain.Model.Creature
         public void Shot() => Instantiate(bullet, spawnBullet.position, transform.rotation).GetComponent<Rigidbody2D>().velocity += (Vector2)(transform.right * 30f);
 
         public void SetBullet(GameObject bullet) => this.bullet = bullet;
-       
     }
 }
